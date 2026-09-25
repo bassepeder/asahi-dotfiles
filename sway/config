@@ -10,11 +10,16 @@ font pango:DejaVu Sans Mono 10
 
 input "type:keyboard" {
     # applealu_ansi: the correct xkb model for Apple keyboards (this laptop's
-    # built-in one included) — without it, Right Option doesn't act as AltGr,
-    # which breaks the { } [ ] level-3 symbols entirely on this layout.
-    # Asahi's own docs recommend this: https://asahilinux.org/docs/sw/keyboard-layouts/
+    # built-in one included) — maps physical keys to the right scancodes on
+    # this hardware. Asahi's own docs recommend it:
+    # https://asahilinux.org/docs/sw/keyboard-layouts/
     xkb_model applealu_ansi
     xkb_layout no
+    # AltGr (level 3: { } [ ] etc.) is Right Alt by default on any PC/no
+    # layout — no config needed for that. This moves it to Left Option
+    # instead, per preference. Left Option stops being plain Alt as a
+    # result; that's the tradeoff of picking a key for this duty.
+    xkb_options lv3:lalt_switch
     repeat_rate 64
     repeat_delay 180
 }

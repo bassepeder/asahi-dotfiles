@@ -51,14 +51,17 @@ Mod is Super/Cmd. Everything else matches i3: `$mod+Return` terminal,
   config in `~/dotfiles/nixos`. Change it in `sway/config` if that's wrong
   for this keyboard.
 - `xkb_model applealu_ansi` is required for Apple keyboards, this laptop's
-  built-in one included — without it, Right Option never acts as AltGr
-  (level 3 shift), so nothing on that layer works. This is Asahi's own
-  documented fix, not a workaround we invented:
-  https://asahilinux.org/docs/sw/keyboard-layouts/. On the Norwegian layout,
-  `{` `}` `[` `]` are **Right Option + 7/0/8/9** — not Option+Shift like on
-  macOS. Linux doesn't (and can't correctly) emulate macOS's own shortcut
-  scheme; this is the real Linux/XKB mapping for this layout on a PC-style
-  keyboard, which is what Right Option now behaves as.
+  built-in one included — it maps physical keys to the right scancodes on
+  this hardware. This is Asahi's own documented fix, not a workaround we
+  invented: https://asahilinux.org/docs/sw/keyboard-layouts/.
+- AltGr (level 3: `{` `}` `[` `]` etc.) is **Left Option**, via
+  `xkb_options lv3:lalt_switch` — Right Alt is AltGr by default on any
+  PC/`no` layout with no config at all, but Left Option was moved into that
+  role by preference. Left Option is no longer plain Alt as a result. On
+  the Norwegian layout the symbols are AltGr+7/0/8/9 for `{`/`}`/`[`/`]` —
+  not Option+Shift like on macOS. Linux doesn't (and can't correctly)
+  emulate macOS's own shortcut scheme; this is the real Linux/XKB mapping
+  for this layout on a PC-style keyboard.
 - Dark mode is forced system-wide: `gsettings` (color-scheme + gtk-theme),
   `GTK_THEME`/`QT_QPA_PLATFORMTHEME` env vars in `profile`, and
   `gtk-3.0`/`gtk-4.0` `settings.ini` as a fallback for apps that don't read
