@@ -23,15 +23,17 @@ else
   echo "⚠️  dnf not found — skipping package install." >&2
 fi
 
-# The C64 font's license explicitly forbids scripted/automated download, so
-# it can't be fetched here — this is a one-time manual step.
+FONT_DIR="$HOME/.local/share/fonts"
+mkdir -p "$FONT_DIR"
 if command -v fc-list >/dev/null 2>&1 && ! fc-list | grep -qi "c64 pro mono"; then
-  cat <<'EOF'
-⚠️  "C64 Pro Mono" font not found. One-time manual step (its license forbids
-    automated download): grab it from https://style64.org/c64-truetype,
-    unzip, and put the .ttf files in ~/.local/share/fonts/, then run:
-      fc-cache -f
-EOF
+  echo "Fetching C64 Pro Mono..."
+  tmp="$(mktemp -d)"
+  curl -sL -o "$tmp/c64tt.zip" "https://style64.org/file/C64_TrueType_v1.2.1-STYLE.zip"
+  unzip -o -q "$tmp/c64tt.zip" -d "$tmp"
+  cp "$tmp"/C64_TrueType_*-STYLE/fonts/*.ttf "$FONT_DIR/"
+  rm -rf "$tmp"
+  fc-cache -f "$FONT_DIR" >/dev/null
+  echo "Installed to $FONT_DIR"
 fi
 
 # ----------------------------------------------------------- stale links ---

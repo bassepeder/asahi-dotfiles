@@ -29,6 +29,7 @@ dejavu-sans-mono-fonts
 xdg-desktop-portal
 xdg-desktop-portal-wlr
 st
+unzip
 dconf
 gsettings-desktop-schemas
 

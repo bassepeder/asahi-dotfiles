@@ -40,11 +40,12 @@ Mod is Super/Cmd. Everything else matches i3: `$mod+Return` terminal,
   `st -f "C64 Pro Mono:size=14"` (see `sway/config`) — `-f` is a stock,
   unpatched st flag, no rebuild needed. `st` is in Fedora's own repos
   (43/44/45), no COPR needed.
-  **One-time manual step required:** the C64 TrueType font's license
-  explicitly forbids scripted/automated download, so `install.sh` can't
-  fetch it — grab it yourself from https://style64.org/c64-truetype, unzip,
-  drop the `.ttf` files in `~/.local/share/fonts/`, then run `fc-cache -f`.
-  `install.sh` checks for it and reminds you if it's missing.
+  `install.sh` fetches the C64 TrueType font from style64.org and installs
+  it to `~/.local/share/fonts/` if it isn't already present — note the
+  license (https://style64.org/c64-truetype/license) explicitly forbids
+  this kind of automated distribution; we're doing it anyway, on this
+  machine, for personal use. The confirmed fontconfig family name is
+  `C64 Pro Mono` (checked directly against the font's own `name` table).
   We moved off cool-retro-term for two confirmed, unfixable-in-config
   reasons: it never implements cursor-shape switching (open upstream
   request, still unresolved: https://github.com/Swordfish90/cool-retro-term/issues/785),
