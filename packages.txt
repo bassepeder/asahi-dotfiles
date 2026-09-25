@@ -31,3 +31,18 @@ xdg-desktop-portal-wlr
 cool-retro-term
 dconf
 gsettings-desktop-schemas
+
+# ------------------------------------------------- simplified_nvim toolchain ---
+# Not config, but simplified_nvim/README.md's LSP servers need these to build
+# (blink.cmp's native matcher, nvim-treesitter parser compilation) or to
+# install (rustup/npm are the delivery mechanism, not dnf packages).
+
+gcc
+make
+nodejs
+npm
+rustup
+clang-tools-extra
+ripgrep
+fd-find
+lazygit

@@ -92,6 +92,25 @@ ln -sfn "$DOTFILES/gtk-4.0" ~/.config/gtk-4.0
 backup ~/.zprofile
 ln -sfn "$DOTFILES/zprofile" ~/.zprofile
 
+# ------------------------------------------------- simplified_nvim toolchain ---
+# LSP servers from simplified_nvim/README.md that dnf doesn't package.
+
+export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
+
+if command -v rustup >/dev/null 2>&1; then
+  echo
+  echo "Installing rust-analyzer (rustup)..."
+  rustup toolchain install stable --profile minimal -c rust-analyzer
+  rustup default stable
+fi
+
+if command -v npm >/dev/null 2>&1; then
+  echo
+  echo "Installing vtsls/vscode-langservers-extracted/oxlint/tree-sitter-cli (npm)..."
+  npm config set prefix "$HOME/.local"
+  npm install -g @vtsls/language-server vscode-langservers-extracted oxlint tree-sitter-cli
+fi
+
 echo
 echo "✅ Dotfiles installed from $DOTFILES"
 echo "Log out and back in on tty1 — .zprofile execs sway automatically."

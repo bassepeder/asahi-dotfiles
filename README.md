@@ -36,8 +36,16 @@ Mod is Super/Cmd. Everything else matches i3: `$mod+Return` terminal,
 
 ## Notes
 
-- Terminal is always launched as `cool-retro-term -p basse_terminal`
-  (see `sway/config`) rather than relying on a saved "last profile."
+- Terminal is launched as `cool-retro-term --profile basse_terminal` (see
+  `sway/config`) — must be the long `--profile` flag; cool-retro-term's `-p`
+  is documented in `--help` but not actually wired up in its arg parser.
+  **One-time manual step required:** cool-retro-term has no directory it
+  scans for profile files — a profile only becomes selectable by name after
+  you import it once through the GUI. Launch `cool-retro-term`, open
+  Settings → General → Import, pick `~/.config/cool-retro-term/profiles/
+  basse_terminal.json`, then quit the app normally (it persists custom
+  profiles to its internal storage on quit, not on import). After that,
+  `--profile basse_terminal` will find it on every future launch.
 - Keyboard layout is set to Norwegian (`no`), matching the other machine
   config in `~/dotfiles/nixos`. Change it in `sway/config` if that's wrong
   for this keyboard.
@@ -47,3 +55,11 @@ Mod is Super/Cmd. Everything else matches i3: `$mod+Return` terminal,
   gsettings.
 - `cool-retro-term` is in Fedora's own repos (confirmed present in Fedora
   43/44/45), so `packages.txt` installs it directly — no COPR needed.
+- `simplified_nvim`'s LSP servers aren't dnf packages; `install.sh` installs
+  rust-analyzer via `rustup` and vtsls/vscode-langservers-extracted/
+  oxlint/tree-sitter-cli via `npm`, and `packages.txt`/`zprofile` add the
+  `gcc`/`make` toolchain and `~/.cargo/bin`+`~/.local/bin` to `PATH` that
+  those need (native builds for blink.cmp and treesitter parsers, plus the
+  npm global-install location). The brew commands in
+  `simplified_nvim/README.md` don't apply here — `install.sh` already
+  covers them.
