@@ -20,7 +20,7 @@ execs `sway` directly, no greeter.
 | | |
 |---|---|
 | [`sway/`](sway) | compositor config — i3 keybinds, mod4 |
-| [`waybar/`](waybar) | status bar, styled to look like plain i3bar (flat, no icons) |
+| [`waybar/`](waybar) | status bar — just workspaces + clock, styled flat/plain like i3bar |
 | [`mako/`](mako) | notifications |
 | [`simplified_nvim/`](simplified_nvim) | Neovim, copied from `~/dotfiles` |
 | [`cool-retro-term/`](cool-retro-term) | terminal profile (C64 font), copied from `~/dotfiles` |
@@ -50,6 +50,15 @@ Mod is Super/Cmd. Everything else matches i3: `$mod+Return` terminal,
 - Keyboard layout is set to Norwegian (`no`), matching the other machine
   config in `~/dotfiles/nixos`. Change it in `sway/config` if that's wrong
   for this keyboard.
+- `xkb_model applealu_ansi` is required for Apple keyboards, this laptop's
+  built-in one included — without it, Right Option never acts as AltGr
+  (level 3 shift), so nothing on that layer works. This is Asahi's own
+  documented fix, not a workaround we invented:
+  https://asahilinux.org/docs/sw/keyboard-layouts/. On the Norwegian layout,
+  `{` `}` `[` `]` are **Right Option + 7/0/8/9** — not Option+Shift like on
+  macOS. Linux doesn't (and can't correctly) emulate macOS's own shortcut
+  scheme; this is the real Linux/XKB mapping for this layout on a PC-style
+  keyboard, which is what Right Option now behaves as.
 - Dark mode is forced system-wide: `gsettings` (color-scheme + gtk-theme),
   `GTK_THEME`/`QT_QPA_PLATFORMTHEME` env vars in `profile`, and
   `gtk-3.0`/`gtk-4.0` `settings.ini` as a fallback for apps that don't read

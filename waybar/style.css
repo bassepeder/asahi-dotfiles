@@ -1,5 +1,4 @@
-/* Styled after actual i3status: one continuous line, literal "|" separators
-   embedded in each module's own format string, no per-module boxes/borders. */
+/* Flattened to look like the plain i3bar: no rounding, no gaps, no icons. */
 
 * {
     font-family: "DejaVu Sans Mono";
@@ -38,24 +37,7 @@ window#waybar {
     color: #ffffff;
 }
 
-#network, #cpu, #disk, #battery {
-    padding: 0 4px;
-    color: #66cc66;
-}
-
-#network.disconnected {
-    color: #ff0000;
-}
-
-#battery.warning {
-    color: #ffff00;
-}
-
-#battery.critical {
-    color: #ff0000;
-}
-
 #clock {
-    padding: 0 4px;
+    padding: 0 10px;
     color: #ffffff;
 }
