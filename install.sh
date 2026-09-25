@@ -45,7 +45,9 @@ MANAGED_LINKS=(
   "$HOME/.config/cool-retro-term/profiles/basse_terminal.json"
   "$HOME/.config/gtk-3.0"
   "$HOME/.config/gtk-4.0"
+  "$HOME/.bash_profile"
   "$HOME/.zprofile"
+  "$HOME/.profile"
 )
 
 cleared=0
@@ -89,8 +91,15 @@ ln -sfn "$DOTFILES/gtk-3.0" ~/.config/gtk-3.0
 backup ~/.config/gtk-4.0
 ln -sfn "$DOTFILES/gtk-4.0" ~/.config/gtk-4.0
 
+# Symlinked to all three so it's read regardless of the account's login
+# shell (bash reads .bash_profile, zsh reads .zprofile, sh/others read
+# .profile).
+backup ~/.bash_profile
+ln -sfn "$DOTFILES/profile" ~/.bash_profile
 backup ~/.zprofile
-ln -sfn "$DOTFILES/zprofile" ~/.zprofile
+ln -sfn "$DOTFILES/profile" ~/.zprofile
+backup ~/.profile
+ln -sfn "$DOTFILES/profile" ~/.profile
 
 # ------------------------------------------------- simplified_nvim toolchain ---
 # LSP servers from simplified_nvim/README.md that dnf doesn't package.

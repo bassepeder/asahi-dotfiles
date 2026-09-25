@@ -11,8 +11,9 @@ cd ~/asahi-dotfiles && ./install.sh
 ```
 
 Installs everything in `packages.txt` via `dnf`, then symlinks configs into
-place. Log out and back in on tty1 — `zprofile` execs `sway` directly, no
-greeter.
+place. Log out and back in on tty1 — `profile` (symlinked to
+`.bash_profile`/`.zprofile`/`.profile`, whichever your login shell reads)
+execs `sway` directly, no greeter.
 
 ## Layout
 
@@ -24,7 +25,7 @@ greeter.
 | [`simplified_nvim/`](simplified_nvim) | Neovim, copied from `~/dotfiles` |
 | [`cool-retro-term/`](cool-retro-term) | terminal profile (C64 font), copied from `~/dotfiles` |
 | [`gtk-3.0/`](gtk-3.0), [`gtk-4.0/`](gtk-4.0) | force dark theme for GTK apps |
-| `zprofile` | execs `sway` on tty1 login, forces dark mode env vars |
+| `profile` | execs `sway` on tty1 login, forces dark mode env vars — symlinked to `.bash_profile`/`.zprofile`/`.profile` |
 | `packages.txt` | dnf package list |
 
 ## Keybinds
@@ -50,14 +51,18 @@ Mod is Super/Cmd. Everything else matches i3: `$mod+Return` terminal,
   config in `~/dotfiles/nixos`. Change it in `sway/config` if that's wrong
   for this keyboard.
 - Dark mode is forced system-wide: `gsettings` (color-scheme + gtk-theme),
-  `GTK_THEME`/`QT_QPA_PLATFORMTHEME` env vars in `zprofile`, and
+  `GTK_THEME`/`QT_QPA_PLATFORMTHEME` env vars in `profile`, and
   `gtk-3.0`/`gtk-4.0` `settings.ini` as a fallback for apps that don't read
   gsettings.
+- `profile` is symlinked to `.bash_profile`, `.zprofile` and `.profile`
+  because only zsh reads `.zprofile` — bash (the default login shell on a
+  fresh Fedora account) reads `.bash_profile` instead, so a bare `.zprofile`
+  silently never runs and Sway never auto-starts.
 - `cool-retro-term` is in Fedora's own repos (confirmed present in Fedora
   43/44/45), so `packages.txt` installs it directly — no COPR needed.
 - `simplified_nvim`'s LSP servers aren't dnf packages; `install.sh` installs
   rust-analyzer via `rustup` and vtsls/vscode-langservers-extracted/
-  oxlint/tree-sitter-cli via `npm`, and `packages.txt`/`zprofile` add the
+  oxlint/tree-sitter-cli via `npm`, and `packages.txt`/`profile` add the
   `gcc`/`make` toolchain and `~/.cargo/bin`+`~/.local/bin` to `PATH` that
   those need (native builds for blink.cmp and treesitter parsers, plus the
   npm global-install location). The brew commands in

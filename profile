@@ -1,3 +1,10 @@
+# Symlinked to .bash_profile, .zprofile and .profile, whichever login shell
+# reads it — bash reads .bash_profile, not .zprofile, and doesn't source
+# .bashrc for login shells on its own.
+if [ -n "$BASH_VERSION" ] && [ -f "$HOME/.bashrc" ]; then
+  . "$HOME/.bashrc"
+fi
+
 # rust-analyzer (rustup) and the npm-installed LSP servers live here.
 export PATH="$HOME/.cargo/bin:$HOME/.local/bin:$PATH"
 
