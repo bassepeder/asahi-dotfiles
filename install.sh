@@ -23,10 +23,12 @@ else
   echo "⚠️  dnf not found — skipping package install." >&2
 fi
 
+# Confirmed present in Fedora's own repos (Fedora 43/44/45) as "cool-retro-term",
+# so this should never fire on a normal Fedora Asahi Remix install.
 if ! command -v cool-retro-term >/dev/null 2>&1; then
   cat <<'EOF'
-⚠️  cool-retro-term did not install from Fedora's repos. Try a COPR, or build
-    from source: https://github.com/Swordfish90/cool-retro-term
+⚠️  cool-retro-term did not install. Build from source if needed:
+    https://github.com/Swordfish90/cool-retro-term
 EOF
 fi
 
@@ -41,8 +43,8 @@ MANAGED_LINKS=(
   "$HOME/.config/mako"
   "$HOME/.config/nvim"
   "$HOME/.config/cool-retro-term/profiles/basse_terminal.json"
-  "$HOME/.gitconfig"
-  "$HOME/.gitignore_global"
+  "$HOME/.config/gtk-3.0"
+  "$HOME/.config/gtk-4.0"
   "$HOME/.zprofile"
 )
 
@@ -82,17 +84,13 @@ ln -sfn "$DOTFILES/simplified_nvim" ~/.config/nvim
 backup ~/.config/cool-retro-term/profiles/basse_terminal.json
 ln -sfn "$DOTFILES/cool-retro-term/basse_terminal.json" ~/.config/cool-retro-term/profiles/basse_terminal.json
 
-backup ~/.gitconfig
-ln -sfn "$DOTFILES/git/gitconfig" ~/.gitconfig
-backup ~/.gitignore_global
-ln -sfn "$DOTFILES/git/gitignore_global" ~/.gitignore_global
+backup ~/.config/gtk-3.0
+ln -sfn "$DOTFILES/gtk-3.0" ~/.config/gtk-3.0
+backup ~/.config/gtk-4.0
+ln -sfn "$DOTFILES/gtk-4.0" ~/.config/gtk-4.0
 
 backup ~/.zprofile
 ln -sfn "$DOTFILES/zprofile" ~/.zprofile
-
-if command -v git-lfs >/dev/null 2>&1; then
-  git lfs install --skip-repo
-fi
 
 echo
 echo "✅ Dotfiles installed from $DOTFILES"

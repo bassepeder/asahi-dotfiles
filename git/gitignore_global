@@ -1,8 +1,0 @@
-.idea
-.venv
-.bloop
-.metals
-.bsp
-project/metals.sbt
-project/project
-**/*.worksheet.sc

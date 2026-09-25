@@ -23,8 +23,8 @@ greeter.
 | [`mako/`](mako) | notifications |
 | [`simplified_nvim/`](simplified_nvim) | Neovim, copied from `~/dotfiles` |
 | [`cool-retro-term/`](cool-retro-term) | terminal profile (C64 font), copied from `~/dotfiles` |
-| [`git/`](git) | personal gitconfig (bastian.tangedal@gmail.com), ported from `~/dotfiles/nixos` |
-| `zprofile` | execs `sway` on tty1 login |
+| [`gtk-3.0/`](gtk-3.0), [`gtk-4.0/`](gtk-4.0) | force dark theme for GTK apps |
+| `zprofile` | execs `sway` on tty1 login, forces dark mode env vars |
 | `packages.txt` | dnf package list |
 
 ## Keybinds
@@ -41,5 +41,9 @@ Mod is Super/Cmd. Everything else matches i3: `$mod+Return` terminal,
 - Keyboard layout is set to Norwegian (`no`), matching the other machine
   config in `~/dotfiles/nixos`. Change it in `sway/config` if that's wrong
   for this keyboard.
-- `git/gitconfig` is the personal identity (gmail), separate from the ABAX
-  one on the macOS machine.
+- Dark mode is forced system-wide: `gsettings` (color-scheme + gtk-theme),
+  `GTK_THEME`/`QT_QPA_PLATFORMTHEME` env vars in `zprofile`, and
+  `gtk-3.0`/`gtk-4.0` `settings.ini` as a fallback for apps that don't read
+  gsettings.
+- `cool-retro-term` is in Fedora's own repos (confirmed present in Fedora
+  43/44/45), so `packages.txt` installs it directly — no COPR needed.

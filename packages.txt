@@ -29,6 +29,5 @@ dejavu-sans-mono-fonts
 xdg-desktop-portal
 xdg-desktop-portal-wlr
 cool-retro-term
-git-delta
-git-lfs
-gh
+dconf
+gsettings-desktop-schemas
