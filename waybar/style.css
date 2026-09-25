@@ -1,0 +1,51 @@
+/* Flattened to look like the plain i3bar: no rounding, no gaps, no icons. */
+
+* {
+    font-family: "DejaVu Sans Mono";
+    font-size: 13px;
+    min-height: 0;
+    border-radius: 0;
+}
+
+window#waybar {
+    background-color: #000000;
+    color: #ffffff;
+}
+
+#workspaces button {
+    padding: 0 6px;
+    background-color: #222222;
+    color: #888888;
+    border: none;
+    border-top: 2px solid transparent;
+}
+
+#workspaces button.focused {
+    background-color: #285577;
+    color: #ffffff;
+    border-top: 2px solid #4c7899;
+}
+
+#workspaces button.urgent {
+    background-color: #900000;
+    color: #ffffff;
+}
+
+#mode {
+    padding: 0 10px;
+    background-color: #900000;
+    color: #ffffff;
+}
+
+#network, #cpu, #disk, #battery, #clock {
+    padding: 0 10px;
+    border-left: 1px solid #666666;
+}
+
+#battery.warning {
+    color: #ffff00;
+}
+
+#battery.critical {
+    color: #ff0000;
+}

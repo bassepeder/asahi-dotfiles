@@ -1,0 +1,34 @@
+# Fedora packages for this Sway/i3-style desktop.
+#
+#   sudo dnf install -y --setopt=strict=0 $(grep -v '^#' packages.txt)
+#
+# git and neovim are assumed already installed on this machine.
+
+sway
+swaybg
+swaylock
+swayidle
+waybar
+wofi
+mako
+grim
+slurp
+wl-clipboard
+brightnessctl
+playerctl
+pipewire
+pipewire-alsa
+pipewire-pulseaudio
+wireplumber
+alsa-utils
+NetworkManager
+polkit-gnome
+xorg-x11-server-Xwayland
+dejavu-sans-fonts
+dejavu-sans-mono-fonts
+xdg-desktop-portal
+xdg-desktop-portal-wlr
+cool-retro-term
+git-delta
+git-lfs
+gh
