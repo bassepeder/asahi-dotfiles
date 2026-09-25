@@ -6,7 +6,7 @@
     "margin-bottom": 0,
 
     "modules-left": ["sway/workspaces", "sway/mode"],
-    "modules-right": ["network", "cpu", "disk", "battery", "clock"],
+    "modules-right": ["network#wl", "network#eth", "cpu", "disk", "battery", "clock"],
 
     "sway/workspaces": {
         "disable-scroll": true,
@@ -15,27 +15,33 @@
     "sway/mode": {
         "format": "{}"
     },
-    "network": {
-        "format-wifi": "W: ({signalStrength}% at {essid}) {ipaddr}",
-        "format-ethernet": "E: {ipaddr}",
+    "network#wl": {
+        "interface": "wl*",
+        "format-wifi": "W: ({signalStrength}%) {ipaddr}",
         "format-disconnected": "W: down",
         "interval": 5
     },
+    "network#eth": {
+        "interface": "en*",
+        "format-ethernet": "| E: {ipaddr}",
+        "format-disconnected": "| E: down",
+        "interval": 5
+    },
     "cpu": {
-        "format": "CPU: {usage}%",
+        "format": "| CPU: {usage}%",
         "interval": 5
     },
     "disk": {
         "path": "/",
-        "format": "{free} free",
+        "format": "| Disk: {free} free",
         "interval": 30
     },
     "battery": {
-        "format": "{capacity}% {time}",
+        "format": "| Bat: {capacity}% {time}",
         "states": { "warning": 20, "critical": 10 }
     },
     "clock": {
-        "format": "{:%Y-%m-%d %H:%M:%S}",
-        "interval": 1
+        "format": "| {:%Y-%m-%d %H:%M:%S}",
+        "interval": 5
     }
 }
