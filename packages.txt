@@ -28,7 +28,7 @@ dejavu-sans-fonts
 dejavu-sans-mono-fonts
 xdg-desktop-portal
 xdg-desktop-portal-wlr
-cool-retro-term
+st
 dconf
 gsettings-desktop-schemas
 

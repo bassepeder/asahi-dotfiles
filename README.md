@@ -23,7 +23,6 @@ execs `sway` directly, no greeter.
 | [`waybar/`](waybar) | status bar — just workspaces + clock, styled flat/plain like i3bar |
 | [`mako/`](mako) | notifications |
 | [`simplified_nvim/`](simplified_nvim) | Neovim, copied from `~/dotfiles` |
-| [`cool-retro-term/`](cool-retro-term) | terminal profile (C64 font), copied from `~/dotfiles` |
 | [`gtk-3.0/`](gtk-3.0), [`gtk-4.0/`](gtk-4.0) | force dark theme for GTK apps |
 | `profile` | execs `sway` on tty1 login, forces dark mode env vars — symlinked to `.bash_profile`/`.zprofile`/`.profile` |
 | `packages.txt` | dnf package list |
@@ -37,16 +36,26 @@ Mod is Super/Cmd. Everything else matches i3: `$mod+Return` terminal,
 
 ## Notes
 
-- Terminal is launched as `cool-retro-term --profile basse_terminal` (see
-  `sway/config`) — must be the long `--profile` flag; cool-retro-term's `-p`
-  is documented in `--help` but not actually wired up in its arg parser.
-  **One-time manual step required:** cool-retro-term has no directory it
-  scans for profile files — a profile only becomes selectable by name after
-  you import it once through the GUI. Launch `cool-retro-term`, open
-  Settings → General → Import, pick `~/.config/cool-retro-term/profiles/
-  basse_terminal.json`, then quit the app normally (it persists custom
-  profiles to its internal storage on quit, not on import). After that,
-  `--profile basse_terminal` will find it on every future launch.
+- Terminal is `st` (suckless terminal), launched as
+  `st -f "C64 Pro Mono:size=14"` (see `sway/config`) — `-f` is a stock,
+  unpatched st flag, no rebuild needed. `st` is in Fedora's own repos
+  (43/44/45), no COPR needed.
+  **One-time manual step required:** the C64 TrueType font's license
+  explicitly forbids scripted/automated download, so `install.sh` can't
+  fetch it — grab it yourself from https://style64.org/c64-truetype, unzip,
+  drop the `.ttf` files in `~/.local/share/fonts/`, then run `fc-cache -f`.
+  `install.sh` checks for it and reminds you if it's missing.
+  We moved off cool-retro-term for two confirmed, unfixable-in-config
+  reasons: it never implements cursor-shape switching (open upstream
+  request, still unresolved: https://github.com/Swordfish90/cool-retro-term/issues/785),
+  so nvim's insert-mode cursor never changed; and it has its own bug
+  sending Option-modified characters with a spurious ESC (Meta) prefix
+  (https://github.com/Swordfish90/cool-retro-term/issues/962), which in
+  nvim would drop you out of insert mode and misfire the character as a
+  command. `st` is a plain, mature Xlib terminal — it doesn't have either
+  problem, and natively implements DECSCUSR (confirmed in its source, no
+  patch required). It's an X11 app, but runs fine under Sway via XWayland
+  (already in `packages.txt`).
 - Keyboard layout is set to Norwegian (`no`), matching the other machine
   config in `~/dotfiles/nixos`. Change it in `sway/config` if that's wrong
   for this keyboard.
@@ -70,8 +79,6 @@ Mod is Super/Cmd. Everything else matches i3: `$mod+Return` terminal,
   because only zsh reads `.zprofile` — bash (the default login shell on a
   fresh Fedora account) reads `.bash_profile` instead, so a bare `.zprofile`
   silently never runs and Sway never auto-starts.
-- `cool-retro-term` is in Fedora's own repos (confirmed present in Fedora
-  43/44/45), so `packages.txt` installs it directly — no COPR needed.
 - `simplified_nvim`'s LSP servers aren't dnf packages; `install.sh` installs
   rust-analyzer via `rustup` and vtsls/vscode-langservers-extracted/
   oxlint/tree-sitter-cli via `npm`, and `packages.txt`/`profile` add the

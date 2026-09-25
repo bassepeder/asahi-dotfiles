@@ -2,7 +2,7 @@
 # Keybinds mirror i3's defaults, mod = Super/Cmd (Mod4).
 
 set $mod Mod4
-set $term cool-retro-term --profile basse_terminal
+set $term st -f "C64 Pro Mono:size=14"
 
 font pango:DejaVu Sans Mono 10
 

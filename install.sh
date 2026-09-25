@@ -23,12 +23,14 @@ else
   echo "⚠️  dnf not found — skipping package install." >&2
 fi
 
-# Confirmed present in Fedora's own repos (Fedora 43/44/45) as "cool-retro-term",
-# so this should never fire on a normal Fedora Asahi Remix install.
-if ! command -v cool-retro-term >/dev/null 2>&1; then
+# The C64 font's license explicitly forbids scripted/automated download, so
+# it can't be fetched here — this is a one-time manual step.
+if command -v fc-list >/dev/null 2>&1 && ! fc-list | grep -qi "c64 pro mono"; then
   cat <<'EOF'
-⚠️  cool-retro-term did not install. Build from source if needed:
-    https://github.com/Swordfish90/cool-retro-term
+⚠️  "C64 Pro Mono" font not found. One-time manual step (its license forbids
+    automated download): grab it from https://style64.org/c64-truetype,
+    unzip, and put the .ttf files in ~/.local/share/fonts/, then run:
+      fc-cache -f
 EOF
 fi
 
@@ -42,7 +44,6 @@ MANAGED_LINKS=(
   "$HOME/.config/waybar"
   "$HOME/.config/mako"
   "$HOME/.config/nvim"
-  "$HOME/.config/cool-retro-term/profiles/basse_terminal.json"
   "$HOME/.config/gtk-3.0"
   "$HOME/.config/gtk-4.0"
   "$HOME/.bash_profile"
@@ -69,7 +70,7 @@ backup() {
   fi
 }
 
-mkdir -p ~/.config ~/.config/cool-retro-term/profiles ~/Pictures
+mkdir -p ~/.config ~/.local/share/fonts ~/Pictures
 
 backup ~/.config/sway
 ln -sfn "$DOTFILES/sway" ~/.config/sway
@@ -82,9 +83,6 @@ ln -sfn "$DOTFILES/mako" ~/.config/mako
 
 backup ~/.config/nvim
 ln -sfn "$DOTFILES/simplified_nvim" ~/.config/nvim
-
-backup ~/.config/cool-retro-term/profiles/basse_terminal.json
-ln -sfn "$DOTFILES/cool-retro-term/basse_terminal.json" ~/.config/cool-retro-term/profiles/basse_terminal.json
 
 backup ~/.config/gtk-3.0
 ln -sfn "$DOTFILES/gtk-3.0" ~/.config/gtk-3.0
