@@ -120,6 +120,29 @@ if command -v npm >/dev/null 2>&1; then
   npm install -g @vtsls/language-server vscode-langservers-extracted oxlint tree-sitter-cli
 fi
 
+# ---------------------------------------------------------------- reload ---
+# If Sway is already running, apply everything live instead of requiring a
+# logout. `swaymsg reload` alone doesn't restart plain `exec` processes (only
+# `exec_always` ones), so waybar/mako/polkit are killed and relaunched too.
+# This never touches the sway process itself — killing that would take down
+# this very terminal along with everything else open.
+
+if [ -n "${SWAYSOCK:-}" ] && command -v swaymsg >/dev/null 2>&1; then
+  echo
+  echo "Sway is running — reloading config and restarting waybar/mako..."
+  swaymsg reload
+  pkill -x waybar 2>/dev/null || true
+  pkill -x mako 2>/dev/null || true
+  pkill -x polkit-gnome-authentication-agent-1 2>/dev/null || true
+  setsid waybar >/dev/null 2>&1 < /dev/null &
+  setsid mako >/dev/null 2>&1 < /dev/null &
+  setsid /usr/libexec/polkit-gnome-authentication-agent-1 >/dev/null 2>&1 < /dev/null &
+  disown -a
+  echo "Reloaded live."
+else
+  echo
+  echo "Sway isn't running yet — log out and back in on tty1 to start it."
+fi
+
 echo
 echo "✅ Dotfiles installed from $DOTFILES"
-echo "Log out and back in on tty1 — .zprofile execs sway automatically."
