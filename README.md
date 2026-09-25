@@ -37,7 +37,7 @@ Mod is Super/Cmd. Everything else matches i3: `$mod+Return` terminal,
 ## Notes
 
 - Terminal is `st` (suckless terminal), launched as
-  `st -f "C64 Pro Mono:size=14"` (see `sway/config`) — `-f` is a stock,
+  `st -f "C64 Pro Mono:size=10"` (see `sway/config`) — `-f` is a stock,
   unpatched st flag, no rebuild needed. `st` is in Fedora's own repos
   (43/44/45), no COPR needed.
   `install.sh` fetches the C64 TrueType font from style64.org and installs
